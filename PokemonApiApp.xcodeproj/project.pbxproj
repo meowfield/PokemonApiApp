@@ -13,6 +13,7 @@
 		921668FD2C56BA9E009D5E4C /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 921668FC2C56BA9E009D5E4C /* Base */; };
 		921668FF2C56BA9F009D5E4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 921668FE2C56BA9F009D5E4C /* Assets.xcassets */; };
 		921669022C56BA9F009D5E4C /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 921669012C56BA9F009D5E4C /* Base */; };
+		9216690B2C56BB2E009D5E4C /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9216690A2C56BB2E009D5E4C /* Pokemon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		921668FE2C56BA9F009D5E4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		921669012C56BA9F009D5E4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		921669032C56BA9F009D5E4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9216690A2C56BB2E009D5E4C /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,64 @@
 		921668F42C56BA9E009D5E4C /* PokemonApiApp */ = {
 			isa = PBXGroup;
 			children = (
-				921668F52C56BA9E009D5E4C /* AppDelegate.swift */,
-				921668F72C56BA9E009D5E4C /* SceneDelegate.swift */,
-				921668F92C56BA9E009D5E4C /* ViewController.swift */,
-				921668FB2C56BA9E009D5E4C /* Main.storyboard */,
-				921668FE2C56BA9F009D5E4C /* Assets.xcassets */,
-				921669002C56BA9F009D5E4C /* LaunchScreen.storyboard */,
-				921669032C56BA9F009D5E4C /* Info.plist */,
+				921669102C57D401009D5E4C /* Resources */,
+				9216690F2C57D3EA009D5E4C /* ViewControllers */,
+				9216690E2C57D3CF009D5E4C /* Storyboards */,
+				9216690D2C57D3B5009D5E4C /* Views */,
+				9216690C2C57D3A0009D5E4C /* App */,
+				921669092C56BB1C009D5E4C /* Model */,
 			);
 			path = PokemonApiApp;
+			sourceTree = "<group>";
+		};
+		921669092C56BB1C009D5E4C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9216690A2C56BB2E009D5E4C /* Pokemon.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9216690C2C57D3A0009D5E4C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				921668F72C56BA9E009D5E4C /* SceneDelegate.swift */,
+				921668F52C56BA9E009D5E4C /* AppDelegate.swift */,
+				921669032C56BA9F009D5E4C /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		9216690D2C57D3B5009D5E4C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9216690E2C57D3CF009D5E4C /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				921668FB2C56BA9E009D5E4C /* Main.storyboard */,
+				921669002C56BA9F009D5E4C /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		9216690F2C57D3EA009D5E4C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				921668F92C56BA9E009D5E4C /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		921669102C57D401009D5E4C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				921668FE2C56BA9F009D5E4C /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				921668FA2C56BA9E009D5E4C /* ViewController.swift in Sources */,
+				9216690B2C56BB2E009D5E4C /* Pokemon.swift in Sources */,
 				921668F62C56BA9E009D5E4C /* AppDelegate.swift in Sources */,
 				921668F82C56BA9E009D5E4C /* SceneDelegate.swift in Sources */,
 			);
@@ -294,12 +346,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AVH7C3ZC3P;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PokemonApiApp/Info.plist;
+				INFOPLIST_FILE = PokemonApiApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,9 +360,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = meowfield..PokemonApiApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -322,12 +379,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AVH7C3ZC3P;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PokemonApiApp/Info.plist;
+				INFOPLIST_FILE = PokemonApiApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -335,9 +393,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = meowfield..PokemonApiApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
