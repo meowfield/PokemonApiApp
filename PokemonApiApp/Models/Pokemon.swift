@@ -21,7 +21,7 @@ struct Results: Decodable {
 
 //Будет дополняться по мере усложнения ТЗ
 struct Link {
-    private let baseUrl = "https://pokeapi.co/api/v2/"
+    private let baseUrl = "https://pokeapi.co/api/v2"
     
     func pokemonList() -> URL {
         return URL(string:"\(baseUrl)/pokemon")!
@@ -47,7 +47,6 @@ struct Ability: Decodable {
     let name: String
     let url: String
 }
-
 
 
 // https://pokeapi.co/api/v2/ability/{id}
