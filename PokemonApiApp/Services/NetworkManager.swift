@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 enum NetworkError: Error {
     case invalidUrl
     case noData
@@ -14,9 +15,19 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
+
+    // MARK: - Class Properties
     static let shared = NetworkManager()
+    
+    // MARK: - Initializers
     private init() {}
-    func fetch<T: Decodable>(_ type: T.Type, from url: URL, completion: @escaping(Result<T, NetworkError>) -> Void) {
+    
+    // MARK: - Public Methods
+    func fetch<T: Decodable>(
+        _ type: T.Type,
+        from url: URL,
+        completion: @escaping(Result<T, NetworkError>) -> Void
+    ) {
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
                 print(error ?? "No error description")
@@ -24,8 +35,6 @@ final class NetworkManager {
             }
             do {
                 let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                
                 let dataModel = try decoder.decode(T.self, from: data)
                 DispatchQueue.main.async {
                     completion(.success(dataModel))
@@ -36,7 +45,10 @@ final class NetworkManager {
         }.resume()
     }
     
-    func fetchImage(from url: URL, completion: @escaping(Result<Data, NetworkError>) -> Void) {
+    func fetchImage(
+        from url: URL,
+        completion: @escaping(Result<Data, NetworkError>) -> Void
+    ) {
         DispatchQueue.global().async {
             guard let imageData = try? Data(contentsOf: url) else {
                 completion(.failure(.noData))

@@ -11,7 +11,7 @@
         <!--Pokemons-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PokemonApiApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="PokemonTableViewController" customModule="PokemonApiApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -78,21 +78,87 @@
             </objects>
             <point key="canvasLocation" x="956.48854961832058" y="3.5211267605633805"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Details View Controller-->
         <scene sceneID="A8Q-fZ-4Oo">
             <objects>
-                <viewController id="dM8-fa-YyB" sceneMemberID="viewController">
+                <viewController id="dM8-fa-YyB" customClass="PokemonDetailsViewController" customModule="PokemonApiApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5k2-xR-J4M">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Bgu-pV-2pm">
+                                <rect key="frame" x="16" y="456.33333333333331" width="361" height="161.66666666666669"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOx-tS-T60">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4V-b6-IzA">
+                                        <rect key="frame" x="0.0" y="35.333333333333371" width="361" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oic-Vq-1pl">
+                                        <rect key="frame" x="0.0" y="70.666666666666686" width="361" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="huK-n6-X9G">
+                                        <rect key="frame" x="0.0" y="106.00000000000006" width="361" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" showsExpansionTextWhenTruncated="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TUc-N2-mpG">
+                                        <rect key="frame" x="0.0" y="141.33333333333331" width="361" height="20.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="oic-Vq-1pl" firstAttribute="centerX" secondItem="Bgu-pV-2pm" secondAttribute="centerX" id="mhP-az-or5"/>
+                                    <constraint firstItem="oic-Vq-1pl" firstAttribute="centerY" secondItem="Bgu-pV-2pm" secondAttribute="centerY" id="xId-8L-7c7"/>
+                                </constraints>
+                            </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Ly4-2T-OqW">
+                                <rect key="frame" x="186" y="234" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GXG-P8-zrf">
+                                <rect key="frame" x="16" y="154.99999999999997" width="361" height="281.33333333333326"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="oge-iO-ajs"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="oge-iO-ajs" firstAttribute="trailing" secondItem="GXG-P8-zrf" secondAttribute="trailing" constant="16" id="GUK-JE-8Qt"/>
+                            <constraint firstItem="oge-iO-ajs" firstAttribute="bottom" secondItem="Bgu-pV-2pm" secondAttribute="bottom" constant="200" id="Uob-lG-5ro"/>
+                            <constraint firstItem="oge-iO-ajs" firstAttribute="trailing" secondItem="Bgu-pV-2pm" secondAttribute="trailing" constant="16" id="bil-U8-Dnm"/>
+                            <constraint firstItem="Bgu-pV-2pm" firstAttribute="top" secondItem="GXG-P8-zrf" secondAttribute="bottom" constant="20" id="n5e-Ho-axE"/>
+                            <constraint firstItem="GXG-P8-zrf" firstAttribute="leading" secondItem="oge-iO-ajs" secondAttribute="leading" constant="16" id="nir-O7-nTj"/>
+                            <constraint firstItem="Bgu-pV-2pm" firstAttribute="leading" secondItem="oge-iO-ajs" secondAttribute="leading" constant="16" id="sCu-wm-Oa3"/>
+                            <constraint firstItem="GXG-P8-zrf" firstAttribute="top" secondItem="5k2-xR-J4M" secondAttribute="topMargin" id="uQp-8q-CQo"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0tc-e1-2VA"/>
+                    <connections>
+                        <outlet property="abilities" destination="huK-n6-X9G" id="n8d-Ac-HyO"/>
+                        <outlet property="activityIndicator" destination="Ly4-2T-OqW" id="hCj-WX-NAd"/>
+                        <outlet property="evolvesFromSpecies" destination="TUc-N2-mpG" id="wKU-sj-pQ2"/>
+                        <outlet property="height" destination="y4V-b6-IzA" id="xam-vs-3aT"/>
+                        <outlet property="imageView" destination="GXG-P8-zrf" id="cIg-vX-M89"/>
+                        <outlet property="name" destination="HOx-tS-T60" id="GRr-mE-dc5"/>
+                        <outlet property="weight" destination="oic-Vq-1pl" id="Pjh-a0-3u1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xid-AB-RUZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1790" y="14"/>
+            <point key="canvasLocation" x="1788.5496183206105" y="13.380281690140846"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="s19-8a-g84">

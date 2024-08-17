@@ -22,9 +22,19 @@ struct Results: Decodable {
 //Будет дополняться по мере усложнения ТЗ
 struct Link {
     private let baseUrl = "https://pokeapi.co/api/v2"
-    
+    private let imagePreview = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon"
     func pokemonList() -> URL {
-        return URL(string:"\(baseUrl)/pokemon")!
+        return URL(string:"\(baseUrl)/pokemon")!        
+    }
+    func pokemonDescription(id: String) -> URL {
+            return URL(string:"\(baseUrl)/pokemon/\(id)/")!
+    }
+    func pokemonSpecies(id: String) -> URL {
+            return URL(string:"\(baseUrl)/pokemon-species/\(id)/")!
+    }
+    
+    func getPreviewImage(id: String) -> URL? {
+        return URL(string: "\(imagePreview)/\(id).png")
     }
 }
 
@@ -35,10 +45,11 @@ struct PokemonDescription: Decodable {
     let height: Int
     let weight: Int
     let sprites: Sprites
-    let abiltiess: Abilities
+    let abilities: [Abilities]
 }
 struct Sprites: Decodable {
     let front_default: String
+    let other: Other
 }
 struct Abilities: Decodable {
     let ability: Ability
@@ -47,7 +58,21 @@ struct Ability: Decodable {
     let name: String
     let url: String
 }
+struct Other: Decodable {
+    let officialArtwork: OfficialArtwork
+    
+    enum CodingKeys: String, CodingKey {
+    case officialArtwork = "official-artwork"
+    }
+}
 
+struct OfficialArtwork: Decodable {
+    let frontDefault: String
+    
+    enum CodingKeys: String, CodingKey {
+    case frontDefault = "front_default"
+    }
+}
 
 // https://pokeapi.co/api/v2/ability/{id}
 struct PokemonAbility: Decodable {
@@ -63,3 +88,11 @@ struct Language: Decodable {
     let url: String
 }
 
+//https://pokeapi.co/api/v2/pokemon-species/2/
+struct Species: Decodable {
+    let evolvesFromSpecies: Results?
+    
+    enum CodingKeys: String, CodingKey {
+        case evolvesFromSpecies = "evolves_from_species"
+    }
+}
