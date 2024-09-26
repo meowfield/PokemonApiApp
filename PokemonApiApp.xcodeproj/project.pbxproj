@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9213F5A82CA5AE3E00063307 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9213F5A72CA5AE3E00063307 /* Alamofire */; };
 		921668F62C56BA9E009D5E4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921668F52C56BA9E009D5E4C /* AppDelegate.swift */; };
 		921668F82C56BA9E009D5E4C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921668F72C56BA9E009D5E4C /* SceneDelegate.swift */; };
 		921668FA2C56BA9E009D5E4C /* PokemonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921668F92C56BA9E009D5E4C /* PokemonTableViewController.swift */; };
@@ -37,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9213F5A82CA5AE3E00063307 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +178,9 @@
 				Base,
 			);
 			mainGroup = 921668E92C56BA9E009D5E4C;
+			packageReferences = (
+				9213F5A62CA5AE3E00063307 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 921668F32C56BA9E009D5E4C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -441,6 +446,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9213F5A62CA5AE3E00063307 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9213F5A72CA5AE3E00063307 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9213F5A62CA5AE3E00063307 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 921668EA2C56BA9E009D5E4C /* Project object */;
 }

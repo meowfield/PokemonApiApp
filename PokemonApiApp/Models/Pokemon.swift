@@ -39,38 +39,70 @@ struct Link {
 }
 
 //https://pokeapi.co/api/v2/pokemon/{id or name}/
-struct PokemonDescription: Decodable {
+struct PokemonDescription {
     let id: Int
     let name: String
     let height: Int
     let weight: Int
     let sprites: Sprites
     let abilities: [Abilities]
-}
-struct Sprites: Decodable {
-    let front_default: String
-    let other: Other
-}
-struct Abilities: Decodable {
-    let ability: Ability
-}
-struct Ability: Decodable {
-    let name: String
-    let url: String
-}
-struct Other: Decodable {
-    let officialArtwork: OfficialArtwork
     
-    enum CodingKeys: String, CodingKey {
-    case officialArtwork = "official-artwork"
+    init(json: [String: Any]) {
+        id = json["id"] as? Int ?? 0
+        name = json["name"] as? String ?? ""
+        height = json["height"] as? Int ?? 0
+        weight = json["weight"] as? Int ?? 0
+        
+        let spritesJson = json["sprites"] as? [String: Any] ?? [:]
+        sprites = Sprites(json: spritesJson)
+        
+        let abilitiesJson = json["abilities"] as? [[String: Any]] ?? []
+        abilities = abilitiesJson.map { Abilities(json: $0) }
     }
 }
 
-struct OfficialArtwork: Decodable {
+struct Sprites {
+    let frontDefault: String
+    let other: Other
+    
+    init(json: [String: Any]) {
+        frontDefault = json["front_default"] as? String ?? ""
+        let otherJson = json["other"] as? [String: Any] ?? [:]
+        other = Other(json: otherJson)
+    }
+}
+struct Other {
+    let officialArtwork: OfficialArtwork
+    
+    init(json: [String: Any]) {
+        let officialArtworkJson = json["official-artwork"] as? [String: Any] ?? [:]
+        officialArtwork = OfficialArtwork(json: officialArtworkJson)
+    }
+}
+struct Abilities {
+    let ability: Ability
+    
+    init(json: [String: Any]) {
+        let abilityJson = json["ability"] as? [String: Any] ?? [:]
+        ability = Ability(json: abilityJson)
+    }
+}
+struct Ability {
+    let name: String
+    let url: String
+    
+    init(json: [String: Any]) {
+        name = json["name"] as? String ?? ""
+        url = json["url"] as? String ?? ""
+    }
+}
+
+
+struct OfficialArtwork {
     let frontDefault: String
     
-    enum CodingKeys: String, CodingKey {
-    case frontDefault = "front_default"
+    init(json: [String: Any]) {
+        frontDefault = json["front_default"] as? String ?? ""
     }
 }
 
