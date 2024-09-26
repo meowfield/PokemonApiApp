@@ -11,7 +11,7 @@ final class PokemonDetailsViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
+
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var height: UILabel!
     @IBOutlet weak var weight: UILabel!
@@ -23,7 +23,6 @@ final class PokemonDetailsViewController: UIViewController {
     
     // MARK: - Private Properties
     private let networkManager = NetworkManager.shared
-    private let link = Link()
     
     lazy var id = String(urlPokemon.split(separator: "/")[5])
         
@@ -34,91 +33,80 @@ final class PokemonDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialState()
-        fetchAllData()
-        activityIndicator.startAnimating()
+        fetchPokemon()
     }
     
     // MARK: - Private Methods
     private func updateUI() {
-        DispatchQueue.main.async {
-            self.name.text = "Name: \(self.pokemon?.name.capitalized ?? "N/A")"
-            self.height.text = "Height: \(self.pokemon?.height ?? 0)"
-            self.weight.text = "Weight: \(self.pokemon?.weight ?? 0)"
-            self.abilities.text = """
-            Abilities: \
-            \(self.pokemon?.abilities.map { $0.ability.name }.joined(separator: ", ") ?? "")
-            """
-            self.evolvesFromSpecies.text = """
-            Evolves from: \(self.pokemonSpecies?.evolvesFromSpecies?.name.capitalized ??
-            "First Pokemon from evolution")
-            """
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.isHidden = true
+            guard let pokemon = pokemon else { return }
+            
+            name.text = "Name: \(pokemon.name.capitalized)"
+            height.text = "Height: \(pokemon.height)"
+            weight.text = "Weight: \(pokemon.weight)"
+            abilities.text = "Abilities: \(pokemon.abilities.map { $0.ability.name }.joined(separator: ", "))"
+            evolvesFromSpecies.text = "Evolves from: \(pokemonSpecies?.evolvesFromSpecies?.name.capitalized ?? "First Pokemon from evolution")"
+            
+            activityIndicator.stopAnimating()
+            activityIndicator.isHidden = true
         }
-    }
-    
-    private func setupInitialState() {
+        
+        private func setupInitialState() {
             activityIndicator.startAnimating()
             [name, height, weight, abilities, evolvesFromSpecies].forEach { $0?.text = "" }
             imageView.image = nil
         }
-    
-    private func fetchAllData() {
-        fetchPokemon { [weak self] in
-            self?.fetchPokemonSpecies {
-                self?.updateUI()
-            }
-        }
-    }
         
-    private func fetchPokemon(completion: @escaping () -> Void) {
-        networkManager.fetch(
-            PokemonDescription.self,
-            from: link.pokemonDescription(id: id)
-        ) { [weak self] result in
-            switch result {
-            case .success(let PokemonDescription):
-                DispatchQueue.main.async { [unowned self] in
-                    self?.pokemon = PokemonDescription
-                    self?.fetchImage()
-                    completion()
+    private func fetchPokemon() {
+            networkManager.fetchPokemon(id: id) { [weak self] result in
+                switch result {
+                case .success(let pokemon):
+                    self?.pokemon = pokemon
+                    self?.fetchPokemonSpecies()
+                case .failure(let error):
+                    print(error)
+                    DispatchQueue.main.async {
+                        self?.activityIndicator.stopAnimating()
+                        self?.activityIndicator.isHidden = true
+                    }
                 }
-            case .failure(let error):
-                print(error)
-                completion()
             }
         }
-    }
     
-    private func fetchPokemonSpecies(completion: @escaping () -> Void) {
-        networkManager.fetch(Species.self, from: link.pokemonSpecies(id: id)) { [weak self] result in
-            switch result {
-            case .success(let species):
-                self?.pokemonSpecies = species
-                completion()
-            case .failure(let error):
-                print(error)
-                completion()
+    private func fetchPokemonSpecies() {
+            networkManager.fetchPokemonSpecies(id: id) { [weak self] result in
+                switch result {
+                case .success(let species):
+                    self?.pokemonSpecies = species
+                    DispatchQueue.main.async {
+                        self?.updateUI()
+                        self?.fetchImage()
+                    }
+                case .failure(let error):
+                    print(error)
+                    DispatchQueue.main.async {
+                        self?.activityIndicator.stopAnimating()
+                        self?.activityIndicator.isHidden = true
+                    }
+                }
             }
         }
-    }
     
     private func fetchImage() {
-        guard let imageUrlString = pokemon?.sprites.other.officialArtwork.frontDefault,
-              let imageUrl = URL(string: imageUrlString) else {
-            print(NetworkError.invalidUrl)
-            return
-        }
-        networkManager.fetchImage(from: imageUrl) { [unowned self] result in
-            switch result {
-            case .success(let imageData):
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(data: imageData)
+            guard let imageUrlString = pokemon?.sprites.other.officialArtwork.frontDefault,
+                  let imageUrl = URL(string: imageUrlString) else {
+                print(NetworkError.invalidUrl)
+                return
+            }
+            
+            networkManager.fetchImage(from: imageUrl) { [weak self] result in
+                switch result {
+                case .success(let imageData):
+                    DispatchQueue.main.async {
+                        self?.imageView.image = UIImage(data: imageData)
+                    }
+                case .failure(let error):
+                    print(error)
                 }
-            case .failure(let error):
-                print(error)
-                
             }
         }
-    }
 }

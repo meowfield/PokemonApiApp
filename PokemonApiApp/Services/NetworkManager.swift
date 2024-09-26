@@ -4,18 +4,17 @@
 //
 //  Created by Данис Гаязов on 31.7.24..
 //
-
 import Foundation
 import Alamofire
 
 enum NetworkError: Error {
     case invalidUrl
     case noData
-    case decodingError
+    case parsingError
 }
 
 final class NetworkManager {
-
+    
     // MARK: - Class Properties
     static let shared = NetworkManager()
     
@@ -23,41 +22,75 @@ final class NetworkManager {
     private init() {}
     
     // MARK: - Public Methods
-    func fetch<T: Decodable>(
-        _ type: T.Type,
-        from url: URL,
-        completion: @escaping(Result<T, NetworkError>) -> Void
-    ) {
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data else {
-                print(error ?? "No error description")
-                return
-            }
-            do {
-                let decoder = JSONDecoder()
-                let dataModel = try decoder.decode(T.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(dataModel))
+    func fetchPokemon(id: String, completion: @escaping (Result<PokemonDescription, NetworkError>) -> Void) {
+            let url = PokemonAPI.Endpoint.pokemonDescription(id: id).url
+            
+            AF.request(url).responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    guard let json = value as? [String: Any] else {
+                        completion(.failure(.parsingError))
+                        return
+                    }
+                    
+                    let pokemon = PokemonDescription(json: json)
+                    completion(.success(pokemon))
+                    
+                case .failure(_):
+                    completion(.failure(.noData))
                 }
-            } catch {
-                completion(.failure(.decodingError))
-            }
-        }.resume()
-    }
-    
-    func fetchImage(
-        from url: URL,
-        completion: @escaping(Result<Data, NetworkError>) -> Void
-    ) {
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: url) else {
-                completion(.failure(.noData))
-                return
-            }
-            DispatchQueue.main.async {
-                completion(.success(imageData))
             }
         }
-    }
+    
+    func fetchPokemonSpecies(id: String, completion: @escaping (Result<Species, NetworkError>) -> Void) {
+            let url = PokemonAPI.Endpoint.pokemonSpecies(id: id).url
+            
+            AF.request(url).responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    guard let json = value as? [String: Any] else {
+                        completion(.failure(.parsingError))
+                        return
+                    }
+                    
+                    let species = Species(json: json)
+                    completion(.success(species))
+                    
+                case .failure(_):
+                    completion(.failure(.noData))
+                }
+            }
+        }
+        
+        func fetchImage(from url: URL, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+            AF.request(url).responseData { response in
+                switch response.result {
+                case .success(let data):
+                    completion(.success(data))
+                case .failure(_):
+                    completion(.failure(.noData))
+                }
+            }
+        }
+        
+        func fetchPokemonList(completion: @escaping (Result<PokemonNames, NetworkError>) -> Void) {
+            let url = PokemonAPI.Endpoint.pokemonList.url
+            
+            AF.request(url).responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    guard let json = value as? [String: Any] else {
+                        completion(.failure(.parsingError))
+                        return
+                    }
+                    
+                    let pokemonNames = PokemonNames(json: json)
+                    completion(.success(pokemonNames))
+                    
+                case .failure(_):
+                    completion(.failure(.noData))
+                }
+            }
+        }
 }
 

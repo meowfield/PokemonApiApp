@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class PokemonTableViewController: UIViewController {
     
     // MARK: - IB Outlets
@@ -15,14 +14,13 @@ final class PokemonTableViewController: UIViewController {
     
     // MARK: - Private Properties
     private let networkManager = NetworkManager.shared
-    private let link = Link()
     
     private var pokemonList: [Results] = []
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchCourses()
+        fetchPokemonList()
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -39,13 +37,13 @@ final class PokemonTableViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    private func fetchCourses() {
-        networkManager.fetch(PokemonNames.self, from: link.pokemonList()) { result in
+    private func fetchPokemonList() {
+        networkManager.fetchPokemonList { [weak self] result in
             switch result {
             case .success(let pokemonNames):
                 DispatchQueue.main.async {
-                    self.pokemonList = pokemonNames.results
-                    self.tableView.reloadData()
+                    self?.pokemonList = pokemonNames.results
+                    self?.tableView.reloadData()
                 }
             case .failure(let error):
                 print(error)
@@ -89,11 +87,10 @@ extension PokemonTableViewController: UITableViewDataSource {
         let pokemon = pokemonList[indexPath.row]
         var content = cell.defaultContentConfiguration()
         content.text = pokemon.name.capitalized
-        let id = pokemon.url.split(separator: "/")[5]
         
-        if let imageUrl = link.getPreviewImage(id: String(id)) {
-            loadImage(for: cell, from: imageUrl)
-        }
+        let imageUrl = PokemonAPI.Endpoint.previewImage(id: pokemon.id).url
+        loadImage(for: cell, from: imageUrl)
+        
         cell.contentConfiguration = content
         return cell
     }
